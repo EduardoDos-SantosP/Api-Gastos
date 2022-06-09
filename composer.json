@@ -1,0 +1,19 @@
+{
+    "name": "edsp/api-gastos",
+    "description": "Api usada para conectar o cliente Vue js com um banco de dados de controle de gastos (despesas/receitas)",
+    "require": {
+        "illuminate/collections": "^9.17",
+        "symfony/string": "^6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Edsp\\ApiGastos\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "EduardoDos-SantosP",
+            "email": "66569234+EduardoDos-SantosP@users.noreply.github.com"
+        }
+    ]
+}
