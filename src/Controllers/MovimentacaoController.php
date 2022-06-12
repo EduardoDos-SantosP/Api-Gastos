@@ -3,11 +3,10 @@
 namespace Edsp\ApiGastos\Controllers;
 
 use Illuminate\Support\Collection;
-use PDO;
 
 class MovimentacaoController extends Controller
 {
-    public function consulteTodos(): Collection
+    public function todos(): Collection
     {
         $conn = $this->getConnection();
 
@@ -20,5 +19,17 @@ class MovimentacaoController extends Controller
         $this->stopConnection();
 
         return new Collection($result);
+    }
+
+    public function peloId(int $id): ?object
+    {
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare('SELECT * FROM movimentacao WHERE id = ' . $id);
+        $stmt->execute();
+
+        $this->stopConnection();
+
+        return ($obj = $stmt->fetchObject()) ? $obj : null;
     }
 }

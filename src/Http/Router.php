@@ -5,6 +5,8 @@ namespace Edsp\ApiGastos\Http;
 use Edsp\ApiGastos\Throwables\InvalidRouteException;
 use Edsp\ApiGastos\Controllers\Controller;
 use Exception;
+use ReflectionException;
+use ReflectionMethod;
 
 class Router
 {
@@ -39,7 +41,7 @@ class Router
         return $this->controller->{$this->action}(...$this->arguments);
     }
 
-    /*** @throws InvalidRouteException */
+    /*** @throws InvalidRouteException|ReflectionException */
     private function setUri(): void
     {
         $uri = rtrim($_GET['uri'] ?? '', '/');
@@ -89,10 +91,16 @@ class Router
         return $this;
     }
 
+    /*** @throws ReflectionException|InvalidRouteException */
     private function setArguments(): void
     {
-        // TODO: Implementar o método setArguments() no Router
-        $this->arguments = [];
+        $reflectionMethod = new ReflectionMethod($this->controller, $this->action);
+
+        $this->arguments = $this->explodedUriCache;
+        $this->explodedUriCache = [];
+
+        if (count($this->arguments) < $reflectionMethod->getNumberOfRequiredParameters())
+        throw new InvalidRouteException("O número de argumentos fornecidos é insuficiente!");
     }
 
     public function setHeader(string $name, string $value): void

@@ -20,6 +20,6 @@ class Response
     /*** @throws JsonException */
     public function encode(): string
     {
-        return json_encode($this, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+        return json_encode($this, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }
