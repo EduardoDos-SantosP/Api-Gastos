@@ -18,8 +18,16 @@ class CustomException extends Exception
     private static function formatObj(Throwable $e): object
     {
         $result = new stdClass();
-        foreach ((new ReflectionClass(Exception::class))
-                     ->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+
+        $exceptionGetters =
+            collect(
+                (new ReflectionClass(Exception::class))
+                    ->getMethods(ReflectionMethod::IS_PUBLIC)
+            )->filter(
+                fn(ReflectionMethod $method) => str_starts_with($method->name, 'get')
+            );
+
+        foreach ($exceptionGetters as $method) {
             $propName = lcfirst(substr($method->getName(), strlen('get')));
             $result->{$propName} = $e->{$method->getName()}();
         }

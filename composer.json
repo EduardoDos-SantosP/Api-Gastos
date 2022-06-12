@@ -3,7 +3,8 @@
     "description": "Api usada para conectar o cliente Vue js com um banco de dados de controle de gastos (despesas/receitas)",
     "require": {
         "illuminate/collections": "^9.17",
-        "symfony/string": "^6.1"
+        "symfony/string": "^6.1",
+      "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
